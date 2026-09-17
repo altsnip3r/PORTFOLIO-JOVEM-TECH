@@ -1,0 +1,6 @@
+{
+  "name": "Portfólio Kessya Wdanmylla",
+  "description": "Portfólio interativo com temática Matrix, terminal e projetos em HTML, CSS e JavaScript.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

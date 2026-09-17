@@ -1,0 +1,927 @@
+/* =====================================================
+   Portfólio Kessya Wdanmylla — Folha de Estilo
+   Estrutura: Reset -> Variáveis -> Telas -> Temas -> Responsivo
+   ===================================================== */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --fundo-escuro: #0a0a0a;
+  --verde-matrix: #00ff41;
+  --vermelho: #e02424;
+  --vermelho-brilho: rgba(255, 42, 42, 0.6);
+  --azul: #2563eb;
+  --azul-brilho: rgba(37, 99, 235, 0.6);
+  --texto-claro: #f5f5f5;
+  --fundo-claro: #f4f3ef;
+  --texto-escuro: #121212;
+  --borda-matrix: rgba(0, 255, 65, 0.4);
+  --sombra-matrix: rgba(0, 255, 65, 0.25);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: "Space Grotesk", sans-serif;
+  background: var(--fundo-escuro);
+  color: var(--texto-claro);
+  min-height: 100vh;
+  overflow-x: hidden;
+  transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+/* Classe utilitária para alternar telas via JavaScript */
+.escondido {
+  display: none !important;
+}
+
+/* =====================================================
+   TELA 1: A ESCOLHA DAS PÍLULAS
+   ===================================================== */
+
+#tela-escolha {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 24px;
+  position: relative;
+  background: radial-gradient(circle at 50% 30%, #151515 0%, #080808 100%);
+}
+
+/* Topo / Barra de status */
+header.topo {
+  width: 100%;
+  max-width: 1200px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  font-family: "IBM Plex Mono", "Share Tech Mono", monospace;
+  font-size: 0.85rem;
+  letter-spacing: 1.5px;
+}
+
+.marca, .status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--verde-matrix);
+  text-shadow: 0 0 8px var(--sombra-matrix);
+  font-weight: 600;
+}
+
+.gato-matrix {
+  font-size: 1.1rem;
+}
+
+.status i {
+  display: inline-block;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--verde-matrix);
+  box-shadow: 0 0 10px var(--verde-matrix);
+  animation: piscarStatus 1.5s infinite alternate;
+}
+
+@keyframes piscarStatus {
+  from { opacity: 0.3; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1.1); }
+}
+
+/* Bloco de Título com Efeito de Digitação */
+.texto {
+  text-align: center;
+  margin: 10px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+
+#titulo-digitar {
+  color: #ff3333;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 2.3rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-shadow: 0 0 12px var(--vermelho-brilho);
+  min-height: 1.3em;
+}
+
+.cursor {
+  font-size: 2.3rem;
+  color: #ff3333;
+  font-weight: bold;
+  animation: piscar 0.8s infinite;
+}
+
+@keyframes piscar {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+/* Área da foto central e das mãos com as pílulas */
+.cena {
+  position: relative;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+  border-radius: 12px;
+  overflow: visible;
+}
+
+.foto {
+  display: block;
+  height: min(72vh, 720px);
+  max-height: 72vh;
+  width: auto;
+  max-width: 92vw;
+  object-fit: contain;
+  border-radius: 12px;
+  border: 1px solid rgba(0, 255, 65, 0.3);
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.9), 0 0 20px rgba(0, 255, 65, 0.2);
+  transition: filter 0.3s ease;
+}
+
+/* Botões interativos posicionados sobre as mãos */
+.mao {
+  position: absolute;
+  width: 46%;
+  height: 25%;
+  background: transparent;
+  border: 1px solid transparent;
+  cursor: pointer;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Mão esquerda na tela: Pílula Vermelha */
+.mao-vermelha {
+  left: 2%;
+  top: 41%;
+}
+
+.mao-vermelha:hover,
+.mao-vermelha:focus-visible {
+  background: rgba(40, 0, 0, 0.35);
+  border-color: rgba(255, 42, 42, 0.5);
+  box-shadow: 0 0 25px rgba(255, 42, 42, 0.35);
+}
+
+/* Mão direita na tela: Pílula Azul */
+.mao-azul {
+  right: 2%;
+  top: 41%;
+}
+
+.mao-azul:hover,
+.mao-azul:focus-visible {
+  background: rgba(0, 25, 60, 0.35);
+  border-color: rgba(37, 99, 235, 0.5);
+  box-shadow: 0 0 25px rgba(37, 99, 235, 0.35);
+}
+
+/* Rótulos das escolhas (aparecem apenas ao passar o mouse) */
+.rotulo {
+  position: absolute;
+  top: 18%;
+  left: 50%;
+  transform: translateX(-50%) translateY(6px);
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  padding: 6px 14px;
+  border-radius: 6px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  z-index: 15;
+}
+
+.mao-vermelha .rotulo {
+  color: #ff9999;
+  background: rgba(30, 0, 0, 0.9);
+  border: 1px solid rgba(255, 42, 42, 0.7);
+  box-shadow: 0 0 12px rgba(255, 42, 42, 0.5);
+}
+
+.mao-azul .rotulo {
+  color: #99c2ff;
+  background: rgba(0, 18, 45, 0.9);
+  border: 1px solid rgba(37, 99, 235, 0.7);
+  box-shadow: 0 0 12px rgba(37, 99, 235, 0.5);
+}
+
+.mao:hover .rotulo,
+.mao:focus-visible .rotulo {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* Descrição detalhada ao passar o mouse */
+.descricao {
+  position: absolute;
+  top: 55%;
+  left: 50%;
+  transform: translateX(-50%) translateY(6px);
+  width: 220px;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.75rem;
+  line-height: 1.45;
+  color: #eee;
+  background: rgba(8, 8, 8, 0.95);
+  padding: 9px 12px;
+  border-radius: 8px;
+  text-align: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  z-index: 20;
+  backdrop-filter: blur(6px);
+}
+
+.mao-vermelha .descricao {
+  border: 1px solid rgba(255, 42, 42, 0.6);
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.85), 0 0 12px rgba(255, 42, 42, 0.3);
+}
+
+.mao-azul .descricao {
+  border: 1px solid rgba(37, 99, 235, 0.6);
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.85), 0 0 12px rgba(37, 99, 235, 0.3);
+}
+
+.mao:hover .descricao,
+.mao:focus-visible .descricao {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* Dica no rodapé da escolha */
+.dica {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.8rem;
+  color: #777;
+  margin-top: 15px;
+  text-align: center;
+  animation: piscarDica 1.8s infinite ease-in-out;
+}
+
+@keyframes piscarDica {
+  0%, 100% { opacity: 0.8; }
+  50% { opacity: 0.3; }
+}
+
+/* =====================================================
+   TELA 2: O TERMINAL COM CHUVA MATRIX (Pílula Vermelha)
+   ===================================================== */
+
+#tela-terminal {
+  position: fixed;
+  inset: 0;
+  background: #020402;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#chuva {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.terminal {
+  position: relative;
+  z-index: 10;
+  font-family: "IBM Plex Mono", "Share Tech Mono", monospace;
+  color: var(--verde-matrix);
+  font-size: 1.15rem;
+  width: 90%;
+  max-width: 520px;
+  background: rgba(0, 0, 0, 0.85);
+  padding: 30px;
+  border-radius: 8px;
+  border: 1px solid var(--borda-matrix);
+  box-shadow: 0 0 30px rgba(0, 255, 65, 0.25);
+}
+
+.terminal p {
+  margin-bottom: 12px;
+  text-shadow: 0 0 8px var(--verde-matrix);
+  min-height: 1.4em;
+}
+
+/* =====================================================
+   TELA 3: O PORTFÓLIO PRINCIPAL
+   ===================================================== */
+
+#portfolio {
+  min-height: 100vh;
+  position: relative;
+}
+
+/* Menu Superior Fixo */
+nav.menu {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 14px 32px;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+}
+
+.menu-links {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 16px;
+}
+
+.menu-links a {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.85rem;
+  text-decoration: none;
+  color: inherit;
+  opacity: 0.8;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 6px 10px;
+  border-radius: 4px;
+  transition: all 0.25s ease;
+}
+
+.menu-links a.link-marca {
+  font-weight: 800;
+  letter-spacing: 2px;
+  opacity: 1;
+  padding: 6px 14px 6px 10px;
+  border-right: 1px solid rgba(255, 255, 255, 0.25);
+  margin-right: 2px;
+}
+
+.menu-links a:hover {
+  opacity: 1;
+}
+
+.btn-voltar {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.8rem;
+  padding: 6px 14px;
+  border-radius: 4px;
+  cursor: pointer;
+  background: transparent;
+  color: inherit;
+  border: 1px solid currentColor;
+  transition: all 0.25s ease;
+}
+
+.btn-voltar:hover {
+  opacity: 0.8;
+  transform: translateY(-1px);
+}
+
+/* Seções Gerais */
+.secao {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 70px 24px;
+}
+
+.titulo-secao {
+  font-family: "IBM Plex Mono", "Share Tech Mono", monospace;
+  font-size: 1.7rem;
+  letter-spacing: 1.5px;
+  margin-bottom: 30px;
+}
+
+/* Seção Sobre Mim */
+.secao-sobre {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 50px;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 80px 24px 60px;
+}
+
+.coluna-texto {
+  flex: 1;
+}
+
+.nome-titulo {
+  font-size: 3.5rem;
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: 2px;
+  margin-bottom: 12px;
+}
+
+.descricao-subtitulo {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 18px;
+  letter-spacing: 1px;
+}
+
+.descricao-texto {
+  font-size: 1.05rem;
+  line-height: 1.7;
+  max-width: 600px;
+}
+
+.card-foto {
+  flex: 0 0 300px;
+  max-width: 320px;
+  border-radius: 12px;
+  padding: 10px;
+  background: rgba(0, 0, 0, 0.6);
+  border: 1px solid var(--borda-matrix);
+  box-shadow: 0 0 20px var(--sombra-matrix);
+  transition: transform 0.3s ease;
+}
+
+.card-foto:hover {
+  transform: translateY(-4px);
+}
+
+.foto-perfil {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  display: block;
+  object-fit: cover;
+  object-position: center 20%;
+  aspect-ratio: 3 / 4;
+}
+
+/* Seção Habilidades */
+.secao-habilidades {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 60px 24px;
+}
+
+.grid-habilidades {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 20px;
+}
+
+.card-habilidade {
+  border-radius: 8px;
+  padding: 22px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.02);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.card-habilidade:hover {
+  transform: translateY(-4px);
+}
+
+.card-habilidade h3 {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 1.1rem;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.card-habilidade p {
+  font-size: 0.9rem;
+  line-height: 1.5;
+  opacity: 0.85;
+}
+
+/* Seção Projetos */
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 24px;
+}
+
+.card {
+  border-radius: 10px;
+  padding: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.02);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+}
+
+.card-cabecalho {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.card-cabecalho h3 {
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.tag-status {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  white-space: nowrap;
+}
+
+.tag-status.concluido {
+  background: rgba(0, 255, 65, 0.15);
+  color: var(--verde-matrix);
+  border: 1px solid var(--verde-matrix);
+}
+
+.tag-status.processo {
+  background: rgba(255, 180, 0, 0.15);
+  color: #ffb400;
+  border: 1px solid #ffb400;
+}
+
+.tag-status.breve {
+  background: rgba(120, 120, 120, 0.2);
+  color: #bbb;
+  border: 1px solid #666;
+}
+
+.card p {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin-bottom: 20px;
+  opacity: 0.85;
+}
+
+.card-rodape {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.card-techs {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.78rem;
+  opacity: 0.75;
+}
+
+.link-projeto {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.82rem;
+  text-decoration: none;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: inherit;
+  transition: transform 0.2s ease;
+}
+
+.link-projeto:hover {
+  transform: translateX(3px);
+}
+
+/* Seção Contato */
+.contato-intro {
+  font-size: 1.1rem;
+  margin-bottom: 28px;
+  opacity: 0.9;
+}
+
+.grid-contato {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 20px;
+}
+
+.card-contato {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 20px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.02);
+  text-decoration: none;
+  color: inherit;
+  transition: all 0.3s ease;
+}
+
+.card-contato:hover {
+  transform: translateY(-3px);
+}
+
+.icone-contato {
+  font-size: 1.8rem;
+}
+
+.card-contato strong {
+  display: block;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.95rem;
+  margin-bottom: 4px;
+}
+
+.card-contato span {
+  font-size: 0.85rem;
+  opacity: 0.75;
+}
+
+/* Rodapé */
+.rodape {
+  text-align: center;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.8rem;
+  letter-spacing: 1px;
+  padding: 40px 20px;
+  opacity: 0.6;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* =====================================================
+   TEMAS (MODO AZUL vs MODO VERMELHO)
+   ===================================================== */
+
+/* MODO AZUL = A Ilusão / Versão Clara e Limpa */
+body.modo-azul {
+  background: var(--fundo-claro);
+  color: var(--texto-escuro);
+}
+
+body.modo-azul nav.menu {
+  background: rgba(244, 243, 239, 0.9);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+body.modo-azul .menu-marca {
+  color: var(--azul);
+}
+
+body.modo-azul .menu-links a:hover {
+  color: var(--azul);
+}
+
+body.modo-azul .btn-voltar {
+  border-color: var(--azul);
+  color: var(--azul);
+}
+
+body.modo-azul .btn-voltar:hover {
+  background: var(--azul);
+  color: #fff;
+}
+
+body.modo-azul .card-foto {
+  background: #ffffff;
+  border-color: rgba(37, 99, 235, 0.3);
+  box-shadow: 0 10px 25px rgba(37, 99, 235, 0.12);
+}
+
+body.modo-azul .titulo-secao {
+  color: var(--azul);
+}
+
+body.modo-azul .descricao-subtitulo {
+  color: var(--azul);
+}
+
+body.modo-azul .card-habilidade,
+body.modo-azul .card,
+body.modo-azul .card-contato {
+  background: #ffffff;
+  border-color: rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
+}
+
+body.modo-azul .card-habilidade:hover,
+body.modo-azul .card:hover,
+body.modo-azul .card-contato:hover {
+  border-color: var(--azul);
+  box-shadow: 0 8px 25px rgba(37, 99, 235, 0.15);
+}
+
+body.modo-azul .card-habilidade h3 {
+  color: var(--azul);
+}
+
+body.modo-azul .link-projeto {
+  color: var(--azul);
+}
+
+body.modo-azul .rodape {
+  border-top-color: rgba(0, 0, 0, 0.1);
+}
+
+/* MODO VERMELHO = A Verdade / Matrix Real */
+body.modo-vermelho {
+  background: #040804;
+  color: var(--verde-matrix);
+}
+
+body.modo-vermelho nav.menu {
+  background: rgba(4, 8, 4, 0.92);
+  border-bottom: 1px solid var(--borda-matrix);
+}
+
+body.modo-vermelho .menu-marca {
+  color: var(--verde-matrix);
+  text-shadow: 0 0 8px var(--sombra-matrix);
+}
+
+body.modo-vermelho .menu-links a {
+  color: #88ff9f;
+}
+
+body.modo-vermelho .menu-links a:hover {
+  color: #ffffff;
+  text-shadow: 0 0 10px var(--verde-matrix);
+}
+
+body.modo-vermelho .btn-voltar {
+  border-color: var(--verde-matrix);
+  color: var(--verde-matrix);
+  text-shadow: 0 0 6px var(--sombra-matrix);
+}
+
+body.modo-vermelho .btn-voltar:hover {
+  background: var(--verde-matrix);
+  color: #000;
+}
+
+body.modo-vermelho .titulo-secao {
+  color: var(--verde-matrix);
+  text-shadow: 0 0 10px rgba(0, 255, 65, 0.5);
+}
+
+body.modo-vermelho .descricao-subtitulo {
+  color: #ffffff;
+}
+
+body.modo-vermelho .descricao-texto {
+  color: #a8ffb8;
+}
+
+body.modo-vermelho .card-foto {
+  border-color: var(--verde-matrix);
+  box-shadow: 0 0 25px rgba(0, 255, 65, 0.35);
+}
+
+body.modo-vermelho .card-habilidade,
+body.modo-vermelho .card,
+body.modo-vermelho .card-contato {
+  background: rgba(0, 20, 5, 0.65);
+  border-color: var(--borda-matrix);
+}
+
+body.modo-vermelho .card-habilidade:hover,
+body.modo-vermelho .card:hover,
+body.modo-vermelho .card-contato:hover {
+  border-color: var(--verde-matrix);
+  box-shadow: 0 0 20px rgba(0, 255, 65, 0.3);
+}
+
+body.modo-vermelho .card-habilidade h3 {
+  color: #ffffff;
+  text-shadow: 0 0 6px var(--verde-matrix);
+}
+
+body.modo-vermelho .card-habilidade p {
+  color: #85e89d;
+}
+
+body.modo-vermelho .card p {
+  color: #85e89d;
+}
+
+body.modo-vermelho .link-projeto {
+  color: var(--verde-matrix);
+  text-shadow: 0 0 8px var(--sombra-matrix);
+}
+
+body.modo-vermelho .nome-titulo {
+  animation: glitch 3.5s infinite;
+  text-shadow: 0 0 14px var(--verde-matrix);
+}
+
+@keyframes glitch {
+  0%, 93%, 100% { transform: translate(0); }
+  94% { transform: translate(-3px, 2px); }
+  96% { transform: translate(3px, -2px); }
+  98% { transform: translate(-2px, -1px); }
+}
+
+body.modo-vermelho .rodape {
+  border-top-color: var(--borda-matrix);
+}
+
+/* =====================================================
+   RESPONSIVIDADE E ACESSIBILIDADE
+   ===================================================== */
+
+@media (max-width: 820px) {
+  .secao-sobre {
+    flex-direction: column-reverse;
+    text-align: center;
+    gap: 35px;
+    padding-top: 40px;
+  }
+
+  .descricao-texto {
+    margin: 0 auto;
+  }
+
+  .card-foto {
+    flex: 0 0 auto;
+    max-width: 260px;
+  }
+
+  .nome-titulo {
+    font-size: 2.8rem;
+  }
+
+  nav.menu {
+    flex-direction: column;
+    gap: 14px;
+    padding: 14px;
+  }
+
+  .menu-links {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+  }
+}
+
+@media (max-width: 600px) {
+  #titulo-digitar, .cursor {
+    font-size: 1.7rem;
+  }
+
+  .mao {
+    width: 48%;
+    height: 28%;
+    top: 41%;
+  }
+
+  .descricao {
+    width: 150px;
+    font-size: 0.65rem;
+  }
+
+  .rotulo {
+    font-size: 0.7rem;
+  }
+
+  .nome-titulo {
+    font-size: 2.2rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+}
