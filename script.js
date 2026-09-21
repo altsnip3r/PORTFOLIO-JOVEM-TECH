@@ -1,229 +1,183 @@
-// =====================================================
-// Portfólio Kessya — a lógica das telas
-// Fiz com javascript puro, sem framework, pra entender
-// de verdade o que cada linha faz
-// =====================================================
+/**
+ * Portfólio Kessya Wdanmylla
+ * Lógica de controle de telas, transições de estado e efeito Matrix com Canvas.
+ */
 
-// Pegando as telas do HTML pelos IDs
-var telaEscolha = document.getElementById("tela-escolha");
-var telaTerminal = document.getElementById("tela-terminal");
-var portfolio = document.getElementById("portfolio");
-var mensagemModo = document.getElementById("mensagem-modo");
+// Elementos de tela principais
+const telaEscolha = document.getElementById("tela-escolha");
+const telaTerminal = document.getElementById("tela-terminal");
+const telaPortfolio = document.getElementById("tela-portfolio");
+const tituloDigitar = document.getElementById("titulo-digitar");
+const canvasChuva = document.getElementById("chuva-matrix");
 
-// Controla os timeouts para poder limpar se necessário
-var timeoutsTerminal = [];
+// Estado do terminal e animação
+let temporizadoresTerminal = [];
+let idAnimacaoChuva = null;
 
-// Texto da mensagem principal da escolha
+// Efeito de digitação no título
 const textoTitulo = "FAÇA SUA ESCOLHA";
-let indice = 0;
-const velocidadeMs = 100;
-let digitandoTimeout = null;
+let indiceCaractere = 0;
 
-function digitarTitulo() {
-  const tituloElemento = document.getElementById("titulo-digitar");
-  if (!tituloElemento) return;
+function animarTitulo() {
+  if (!tituloDigitar) return;
 
-  if (indice < textoTitulo.length) {
-    tituloElemento.textContent += textoTitulo.charAt(indice);
-    indice++;
-    digitandoTimeout = setTimeout(digitarTitulo, velocidadeMs);
+  if (indiceCaractere < textoTitulo.length) {
+    tituloDigitar.textContent += textoTitulo.charAt(indiceCaractere);
+    indiceCaractere++;
+    setTimeout(animarTitulo, 90);
   }
 }
 
-// Inicia a digitação ao carregar a página
-document.addEventListener("DOMContentLoaded", function () {
-  // Re-busca os elementos caso ainda não estivessem prontos
-  telaEscolha = document.getElementById("tela-escolha");
-  telaTerminal = document.getElementById("tela-terminal");
-  portfolio = document.getElementById("portfolio");
-  mensagemModo = document.getElementById("mensagem-modo");
-
-  digitarTitulo();
+document.addEventListener("DOMContentLoaded", () => {
+  if (tituloDigitar) {
+    tituloDigitar.textContent = "";
+    indiceCaractere = 0;
+    animarTitulo();
+  }
 });
 
-// Controla a animação da chuva Matrix em canvas
-var animacaoChuva = null;
-
-// ---------- PÍLULA AZUL: abre a versão "normal" (clara) ----------
+// Pílula Azul: Versão clara direta
 function escolherAzul() {
-  if (telaEscolha) telaEscolha.classList.add("escondido");
-  if (telaTerminal) telaTerminal.classList.add("escondido");
-  if (portfolio) portfolio.classList.remove("escondido");
+  telaEscolha.classList.add("escondido");
+  telaTerminal.classList.add("escondido");
+  telaPortfolio.classList.remove("escondido");
 
-  document.body.className = "modo-azul";
-
-  mensagemModo = document.getElementById("mensagem-modo");
-  if (mensagemModo) {
-    mensagemModo.textContent = "// A realidade continua...";
-  }
-
+  document.body.className = "tema-azul";
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
-// ---------- PÍLULA VERMELHA: terminal + chuva primeiro ----------
+// Pílula Vermelha: Terminal com efeito chuva e posterior acesso ao portfólio
 function escolherVermelho() {
-  if (telaEscolha) telaEscolha.classList.add("escondido");
-  if (telaTerminal) telaTerminal.classList.remove("escondido");
+  telaEscolha.classList.add("escondido");
+  telaTerminal.classList.remove("escondido");
 
-  document.body.className = "modo-vermelho";
+  document.body.className = "tema-vermelho";
 
-  // Inicia os efeitos do terminal e da chuva de códigos
-  iniciarChuva();
-  escreverTerminal();
+  iniciarChuvaMatrix();
+  executarTerminal();
 }
 
-// As frases do terminal aparecem uma por vez
-function escreverTerminal() {
-  limparTerminal();
+function executarTerminal() {
+  limparMensagensTerminal();
 
-  var linhas = [
+  const linhas = [
     "> iniciando protocolo...",
     "> questionando o caminho óbvio...",
     "> carregando curiosidade...",
     "> acesso concedido."
   ];
 
-  // setTimeout em sequência: cada linha espera a anterior
-  for (var i = 0; i < linhas.length; i++) {
-    mostrarLinha(i, linhas[i]);
-  }
+  linhas.forEach((texto, indice) => {
+    const delay = (indice + 1) * 850;
+    const timeout = setTimeout(() => {
+      const paragrafo = document.getElementById(`terminal-linha-${indice + 1}`);
+      if (paragrafo) paragrafo.textContent = texto;
+    }, delay);
 
-  // Depois da última linha, espera um instante e abre o portfólio no estilo Matrix
-  var tempoTotal = linhas.length * 900 + 800;
-  var timeoutFinal = setTimeout(abrirPortfolioMatrix, tempoTotal);
-  timeoutsTerminal.push(timeoutFinal);
-}
+    temporizadoresTerminal.push(timeout);
+  });
 
-function mostrarLinha(numero, texto) {
-  var t = setTimeout(function () {
-    var p = document.getElementById("linha" + (numero + 1));
-    if (p) {
-      p.textContent = texto;
-    }
-  }, (numero + 1) * 900);
-  timeoutsTerminal.push(t);
+  const tempoTotal = linhas.length * 850 + 600;
+  const timeoutFinal = setTimeout(abrirPortfolioMatrix, tempoTotal);
+  temporizadoresTerminal.push(timeoutFinal);
 }
 
 function abrirPortfolioMatrix() {
-  pararChuva();
-  if (telaTerminal) telaTerminal.classList.add("escondido");
-  if (portfolio) portfolio.classList.remove("escondido");
-
-  mensagemModo = document.getElementById("mensagem-modo");
-  if (mensagemModo) {
-    mensagemModo.textContent = "// Bem-vindo à realidade.";
-  }
-
+  pararChuvaMatrix();
+  telaTerminal.classList.add("escondido");
+  telaPortfolio.classList.remove("escondido");
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
-// Botão do menu que volta pra tela inicial de escolha
-function voltarEscolha() {
-  pararChuva();
-  limparTimeoutsTerminal();
+// Retorno à tela de escolha
+function voltarParaEscolha() {
+  pararChuvaMatrix();
+  limparTemporizadores();
 
-  if (portfolio) portfolio.classList.add("escondido");
-  if (telaTerminal) telaTerminal.classList.add("escondido");
-  if (telaEscolha) telaEscolha.classList.remove("escondido");
+  telaPortfolio.classList.add("escondido");
+  telaTerminal.classList.add("escondido");
+  telaEscolha.classList.remove("escondido");
 
   document.body.className = "";
+  limparMensagensTerminal();
 
-  limparTerminal();
-
-  // Garante que o título continue preenchido
-  const tituloElemento = document.getElementById("titulo-digitar");
-  if (tituloElemento && tituloElemento.textContent === "") {
-    indice = 0;
-    digitarTitulo();
+  if (tituloDigitar) {
+    tituloDigitar.textContent = "";
+    indiceCaractere = 0;
+    animarTitulo();
   }
 
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
-function limparTerminal() {
-  for (var i = 1; i <= 4; i++) {
-    var p = document.getElementById("linha" + i);
-    if (p) p.textContent = "";
+function limparMensagensTerminal() {
+  for (let i = 1; i <= 4; i++) {
+    const linha = document.getElementById(`terminal-linha-${i}`);
+    if (linha) linha.textContent = "";
   }
 }
 
-function limparTimeoutsTerminal() {
-  for (var i = 0; i < timeoutsTerminal.length; i++) {
-    clearTimeout(timeoutsTerminal[i]);
-  }
-  timeoutsTerminal = [];
+function limparTemporizadores() {
+  temporizadoresTerminal.forEach(clearTimeout);
+  temporizadoresTerminal = [];
 }
 
-// ---------- CHUVA MATRIX (HTML5 Canvas) ----------
-function iniciarChuva() {
-  var canvas = document.getElementById("chuva");
-  if (!canvas) return;
+// Efeito Matrix no Canvas HTML5
+function iniciarChuvaMatrix() {
+  if (!canvasChuva) return;
 
-  var ctx = canvas.getContext("2d");
+  const contexto = canvasChuva.getContext("2d");
 
-  function redimensionarCanvas() {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+  function ajustarDimensoes() {
+    canvasChuva.width = window.innerWidth;
+    canvasChuva.height = window.innerHeight;
   }
-  redimensionarCanvas();
+  ajustarDimensoes();
 
-  // Caracteres que caem (katakana misturado com números e operadores)
-  var letras = "アイウエオカキクケコサシスセソタチツテト0123456789<>/{}*=";
-  var tamanho = 16;
-  var colunas = Math.floor(canvas.width / tamanho);
+  const caracteres = "アイウエオカキクケコサシスセソタチツテト0123456789<>/{}*=";
+  const tamanhoFonte = 16;
+  let colunas = Math.floor(canvasChuva.width / tamanhoFonte);
+  let posicoesY = Array.from({ length: colunas }, () => Math.random() * -50);
 
-  // Posição inicial Y de cada coluna
-  var posicoes = [];
-  for (var i = 0; i < colunas; i++) {
-    posicoes[i] = Math.random() * -50;
-  }
+  function desenharQuadro() {
+    contexto.fillStyle = "rgba(0, 0, 0, 0.08)";
+    contexto.fillRect(0, 0, canvasChuva.width, canvasChuva.height);
 
-  function desenhar() {
-    // Fundo semitransparente cria o rastro gradual das letras
-    ctx.fillStyle = "rgba(0, 0, 0, 0.08)";
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    contexto.fillStyle = "#00ff41";
+    contexto.font = `${tamanhoFonte}px monospace`;
 
-    ctx.fillStyle = "#00ff41";
-    ctx.font = tamanho + "px monospace";
+    for (let i = 0; i < posicoesY.length; i++) {
+      const caractere = caracteres.charAt(Math.floor(Math.random() * caracteres.length));
+      contexto.fillText(caractere, i * tamanhoFonte, posicoesY[i] * tamanhoFonte);
 
-    for (var i = 0; i < colunas; i++) {
-      var indiceLetra = Math.floor(Math.random() * letras.length);
-      var letra = letras.charAt(indiceLetra);
-
-      ctx.fillText(letra, i * tamanho, posicoes[i] * tamanho);
-
-      // Quando passa do fim da tela, volta ao topo de forma aleatória
-      if (posicoes[i] * tamanho > canvas.height && Math.random() > 0.975) {
-        posicoes[i] = 0;
+      if (posicoesY[i] * tamanhoFonte > canvasChuva.height && Math.random() > 0.975) {
+        posicoesY[i] = 0;
       }
-      posicoes[i]++;
+      posicoesY[i]++;
     }
 
-    animacaoChuva = requestAnimationFrame(desenhar);
+    idAnimacaoChuva = requestAnimationFrame(desenharQuadro);
   }
 
-  desenhar();
+  desenharQuadro();
 
-  window.addEventListener("resize", function () {
-    if (animacaoChuva !== null) {
-      redimensionarCanvas();
-      colunas = Math.floor(canvas.width / tamanho);
-      posicoes = [];
-      for (var i = 0; i < colunas; i++) {
-        posicoes[i] = Math.random() * -30;
-      }
+  window.addEventListener("resize", () => {
+    if (idAnimacaoChuva !== null) {
+      ajustarDimensoes();
+      colunas = Math.floor(canvasChuva.width / tamanhoFonte);
+      posicoesY = Array.from({ length: colunas }, () => Math.random() * -30);
     }
   });
 }
 
-function pararChuva() {
-  if (animacaoChuva !== null) {
-    cancelAnimationFrame(animacaoChuva);
-    animacaoChuva = null;
+function pararChuvaMatrix() {
+  if (idAnimacaoChuva !== null) {
+    cancelAnimationFrame(idAnimacaoChuva);
+    idAnimacaoChuva = null;
   }
 }
 
-// Torna as funções acessíveis globalmente
+// Exportações globais para eventos inline do HTML
 window.escolherAzul = escolherAzul;
 window.escolherVermelho = escolherVermelho;
-window.voltarEscolha = voltarEscolha;
+window.voltarParaEscolha = voltarParaEscolha;

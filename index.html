@@ -1,234 +1,175 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kessya Wdanmylla | Escolha</title>
-  <meta name="description" content="Portfólio interativo com temática Matrix, terminal e projetos de Kessya Wdanmylla.">
-  <meta property="og:title" content="Kessya Wdanmylla | Escolha">
-  <meta property="og:description" content="Portfólio interativo com temática Matrix, terminal e projetos de Kessya Wdanmylla.">
-  
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600;700&family=Share+Tech+Mono&family=Space+Grotesk:wght@400;700&display=swap" rel="stylesheet">
+  <title>Kessya Wdanmylla | Portfólio</title>
   <link rel="stylesheet" href="style.css">
-
-  <!-- Script principal do React / Vite -->
-  <script src="script.js" defer></script>
 </head>
-
 <body>
 
-  <!-- TELA 1: a escolha das pílulas -->
+  <!-- Tela 1: Escolha Inicial -->
   <main id="tela-escolha">
-    <header class="topo">
-      <span class="marca">
-        <span class="gato-matrix"></span> KESSYA
+    <header class="topo-escolha">
+      <span class="marca">KESSYA</span>
+      <span class="status">
+        <span class="ponto-status"></span>
+        SISTEMA ONLINE
       </span>
-      <span class="status"><i></i> SISTEMA ONLINE</span>
     </header>
 
-    <div class="texto">
-      <h1 id="titulo-digitar"></h1>
-      <span class="cursor">|</span>
+    <div class="bloco-titulo">
+      <h1 id="titulo-digitar">FAÇA SUA ESCOLHA</h1>
+      <span class="cursor-terminal">|</span>
     </div>
 
-    <div class="cena">
-      <!-- Coloque sua foto na mesma pasta com o nome kessya.png -->
-      <img id="foto-escolha" src="fotos/kessya.png" alt="Kessya Wdanmylla segurando duas pílulas" class="foto">
+    <img 
+      id="foto-escolha" 
+      src="fotos/kessya.png" 
+      onerror="if(this.src.indexOf('kessya.png')!==-1 && !this.dataset.tried){this.dataset.tried='1';this.src='kessya.png';}" 
+      alt="Kessya Wdanmylla - Escolha sua pílula" 
+      class="foto-escolha"
+    >
 
-      <!-- A opção vermelha aparece na mão ESQUERDA (lado esquerdo da tela) -->
-      <button type="button" class="mao mao-vermelha" onclick="escolherVermelho()" title="Escolher a Pílula Vermelha">
-        <span class="rotulo">A verdade</span>
-        <span class="descricao">A pílula vermelha rompe a simulação. Veja o código-fonte, a lógica crua e o terminal onde a realidade é construída.</span>
+    <div class="mascara-fundo"></div>
+
+    <!-- Regiões interativas das mãos -->
+    <div class="container-acoes">
+      <button type="button" class="gatilho-mao mao-esquerda" onclick="escolherVermelho()" aria-label="Revelar a realidade">
+        <div class="legenda-hover">
+          <span class="titulo-opcao">REVELAR A REALIDADE</span>
+          <span class="subtitulo-opcao">// romper a simulação</span>
+          <span class="linha-brilho"></span>
+        </div>
       </button>
 
-      <!-- A opção azul aparece na mão DIREITA (lado direito da tela) -->
-      <button type="button" class="mao mao-azul" onclick="escolherAzul()" title="Escolher a Pílula Azul">
-        <span class="rotulo">A ilusão</span>
-        <span class="descricao">A pílula azul fecha os olhos. Continue acreditando no que você quer acreditar e pule o código-fonte.</span>
+      <button type="button" class="gatilho-mao mao-direita" onclick="escolherAzul()" aria-label="Continuar no simulador">
+        <div class="legenda-hover">
+          <span class="titulo-opcao">CONTINUAR NO SIMULADOR</span>
+          <span class="subtitulo-opcao">// seguir na ilusão</span>
+          <span class="linha-brilho"></span>
+        </div>
       </button>
     </div>
   </main>
 
-  <!-- TELA 2: o terminal (só aparece depois da pílula vermelha) -->
-  <div id="tela-terminal" class="escondido">
-    <canvas id="chuva"></canvas>
-    <div class="terminal">
-      <p id="linha1"></p>
-      <p id="linha2"></p>
-      <p id="linha3"></p>
-      <p id="linha4"></p>
+  <!-- Tela 2: Efeito Terminal Matrix -->
+  <div id="tela-terminal" class="escondido" aria-hidden="true">
+    <canvas id="chuva-matrix"></canvas>
+    <div class="painel-terminal">
+      <p id="terminal-linha-1"></p>
+      <p id="terminal-linha-2"></p>
+      <p id="terminal-linha-3"></p>
+      <p id="terminal-linha-4"></p>
     </div>
   </div>
 
-  <!-- TELA 3: o portfólio (versão clara = azul, versão matrix = vermelha) -->
-  <main id="portfolio" class="escondido">
-    
-    <nav class="menu">
-      <div class="menu-links">
-        <a href="#sobre" class="link-marca">KESSYA</a>
-        <a href="#sobre">Sobre mim</a>
+  <!-- Tela 3: Portfólio Principal -->
+  <main id="tela-portfolio" class="escondido">
+    <nav class="barra-navegacao">
+      <div class="navegacao-links">
+        <a href="#sobre" class="link-destaque">KESSYA</a>
+        <a href="#sobre">Sobre</a>
         <a href="#habilidades">Habilidades</a>
         <a href="#projetos">Projetos</a>
         <a href="#contato">Contato</a>
-        <button type="button" class="btn-voltar" onclick="voltarEscolha()">Voltar à escolha</button>
+        <button type="button" class="btn-retornar" onclick="voltarParaEscolha()">Voltar à escolha</button>
       </div>
     </nav>
 
-    <!-- SEÇÃO SOBRE MIM -->
-    <section id="sobre" class="secao-sobre">
-      <!-- Coluna da Esquerda: Nome e Descrição -->
-      <div class="coluna-texto">
-        <h1 class="nome-titulo">KESSYA<br>WDANMYLLA</h1>
-        <p class="descricao-subtitulo">Fullstack Developer in Training</p>
-        <p class="descricao-texto">
-          Me chamo Kessya Wdanmylla, estou no ultimo periodo da graduação em Análise e Desenvolvimento de Sistemas, com foco em integrar o desenvolvimento backend com cibersegurança, minha base técnica inclui formação em Python pela Softex e a experiência prática no programa Jovem Tech, sou movida pelo aprendizado contínuo e pela resolução de problemas complexos, minha trajetória é impulsionada pela ambição de atuar no mercado internacional.
+    <!-- Sobre Mim -->
+    <section id="sobre" class="secao secao-sobre">
+      <div class="texto-apresentacao">
+        <h1 class="nome-completo">KESSYA<br>WDANMYLLA</h1>
+        <p class="profissao">Fullstack Developer in Training</p>
+        <p class="biografia">
+          Me chamo Kessya Wdanmylla, estou no último período da graduação em Análise e Desenvolvimento de Sistemas, com foco em integrar o desenvolvimento backend com cibersegurança. Minha base técnica inclui formação em Python pela Softex e a experiência prática no programa Jovem Tech.
         </p>
       </div>
 
-      <!-- Coluna da Direita: Card de Foto -->
-      <div class="card-foto">
-        <img id="foto-perfil" src="fotos/sobremim_.jpg" onerror="if(this.src.indexOf('sobre-mim')===-1)this.src='fotos/sobre-mim.jpg';" alt="Foto de Kessya Wdanmylla" class="foto-perfil">
+      <div class="container-foto-perfil">
+        <img 
+          src="fotos/sobremim_.jpg" 
+          onerror="if(this.src.indexOf('sobre-mim')===-1)this.src='fotos/sobre-mim.jpg';" 
+          alt="Foto de Kessya Wdanmylla" 
+          class="foto-perfil"
+        >
       </div>
     </section>
 
-    <!-- SEÇÃO HABILIDADES -->
-    <section id="habilidades" class="secao-habilidades">
+    <!-- Habilidades -->
+    <section id="habilidades" class="secao">
       <h2 class="titulo-secao">// HABILIDADES & TECNOLOGIAS</h2>
-      
-      <div class="grid-habilidades">
-        <div class="card-habilidade">
+      <div class="grade-habilidades">
+        <article class="cartao-habilidade">
           <h3>Banco de Dados</h3>
           <p>Modelagem relacional, estruturação de tabelas, consultas SQL e persistência integrada ao backend.</p>
-        </div>
-
-        <div class="card-habilidade">
+        </article>
+        <article class="cartao-habilidade">
           <h3>Python</h3>
           <p>Desenvolvimento Backend, Programação Orientada a Objetos (POO), estruturas de dados e automação.</p>
-        </div>
-
-        <div class="card-habilidade">
+        </article>
+        <article class="cartao-habilidade">
           <h3>HTML5 & CSS3</h3>
-          <p>Estruturação semântica moderna, layouts responsivos, Flexbox, Grid e animações interativas.</p>
-        </div>
-        
-        <div class="card-habilidade">
+          <p>Estruturação semântica moderna, layouts responsivos, Flexbox, Grid e interfaces acessíveis.</p>
+        </article>
+        <article class="cartao-habilidade">
           <h3>JavaScript</h3>
-          <p>Lógica de programação, manipulação do DOM, funções assíncronas e scripts interativos para a Web.</p>
-        </div>
-
-        <div class="card-habilidade">
+          <p>Lógica de programação, manipulação dinâmica do DOM, requisições assíncronas e animações na Web.</p>
+        </article>
+        <article class="cartao-habilidade">
           <h3>Git & GitHub</h3>
-          <p>Controle de versão, gerenciamento de branches, repositórios remotos e fluxo de trabalho colaborativo.</p>
-        </div>
+          <p>Controle de versão, branching, fluxo de trabalho em equipe e documentação de repositórios.</p>
+        </article>
       </div>
     </section>
 
-    <!-- SEÇÃO PROJETOS -->
+    <!-- Projetos -->
     <section id="projetos" class="secao">
       <h2 class="titulo-secao">// PROJETOS</h2>
-      <div class="cards">
-        <div class="card">
-          <div class="card-cabecalho">
-            <h3>Landing Page — Jovem Tech</h3>
-            <span class="tag-status processo">EM ANDAMENTO</span>
-          </div>
-          <p>Desenvolvimento de página web responsiva e estruturada durante a formação no programa Jovem Tech, aplicando boas práticas de front-end.</p>
-          <div class="card-rodape">
-            <span class="card-techs">HTML5 · CSS3 · JavaScript · Git</span>
-            <a href="https://github.com/altsnip3r/PROJETO-LADING-PAGE---JOVEM-TECH" target="_blank" rel="noopener noreferrer" class="link-projeto">Ver Repositório no GitHub →</a>
-          </div>
-        </div>
-
-        <div class="card">
-          <div class="card-cabecalho">
-            <h3>Projeto CodeStar</h3>
-            <span class="tag-status concluido">CONCLUÍDO</span>
-          </div>
-          <p>Aplicação focada em lógica de programação e algoritmos, aplicando boas práticas de código, modularização e versionamento com Git.</p>
-          <div class="card-rodape">
-            <span class="card-techs">Python · Lógica · Algoritmos</span>
-            <a href="https://github.com/altsnip3r/PROJETO-CODESTAR-" target="_blank" rel="noopener noreferrer" class="link-projeto">Ver Repositório no GitHub →</a>
-          </div>
-        </div>
-
-        <div class="card">
-          <div class="card-cabecalho">
-            <h3>Plataforma de Concurso</h3>
-            <span class="tag-status concluido">CONCLUÍDO</span>
-          </div>
-          <p>Plataforma para gestão tática de estudos e acompanhamento de metas para o TAF (Teste de Aptidão Física), com ciclo semanal e sincronização contínua de dados.</p>
-          <div class="card-rodape">
-            <span class="card-techs">React · JavaScript · Tailwind CSS · HTML5 Semântico · LocalStorage</span>
-            <a href="https://github.com/altsnip3r/PLATAFORMA-CONCURSO" target="_blank" rel="noopener noreferrer" class="link-projeto">Ver Repositório no GitHub →</a>
-          </div>
-        </div>
-
-        <div class="card">
-          <div class="card-cabecalho">
-            <h3>Portfólio Web Interativo</h3>
-            <span class="tag-status processo">EM ANDAMENTO</span>
-          </div>
-          <p>Projeto de portfólio interativo com temática Matrix e transições dinâmicas, desenvolvido com HTML5, CSS3, JavaScript puro e efeitos visuais no Canvas.</p>
-          <div class="card-rodape">
-            <span class="card-techs">HTML5 · CSS3 · JavaScript · Git</span>
-            <a href="https://github.com/altsnip3r/PORTIFOLIO-" target="_blank" rel="noopener noreferrer" class="link-projeto">Ver Repositório no GitHub →</a>
-          </div>
-        </div>
-
-        <div class="card">
-          <div class="card-cabecalho">
-            <h3>Projeto Integrador IFMA / Softex</h3>
-            <span class="tag-status concluido">CONCLUÍDO</span>
-          </div>
-          <p>Projeto colaborativo desenvolvido na formação Softex / IFMA, combinando arquitetura backend, integração de serviços e trabalho em equipe.</p>
-          <div class="card-rodape">
-            <span class="card-techs">Python Backend · IFMA · Softex</span>
-            <a href="https://github.com/IFMASJRSOFTEXPROJETOINTEGRADOR" target="_blank" rel="noopener noreferrer" class="link-projeto">Ver Repositório no GitHub →</a>
-          </div>
-        </div>
+      <div class="grade-projetos">
+        <article class="cartao-projeto">
+          <h3>Landing Page — Jovem Tech</h3>
+          <p>Desenvolvimento de página web responsiva e estruturada durante a formação no programa Jovem Tech.</p>
+          <a href="https://github.com/altsnip3r/PROJETO-LADING-PAGE---JOVEM-TECH" target="_blank" rel="noopener noreferrer">Ver no GitHub →</a>
+        </article>
+        <article class="cartao-projeto">
+          <h3>Projeto CodeStar</h3>
+          <p>Aplicação focada em lógica de programação, algoritmos e boas práticas de versionamento com Git.</p>
+          <a href="https://github.com/altsnip3r/PROJETO-CODESTAR-" target="_blank" rel="noopener noreferrer">Ver no GitHub →</a>
+        </article>
+        <article class="cartao-projeto">
+          <h3>Plataforma de Concurso</h3>
+          <p>Gestão tática de rotina de estudos e metas físicas do TAF, desenvolvida com React e persistência local.</p>
+          <a href="https://github.com/altsnip3r/PLATAFORMA-CONCURSO" target="_blank" rel="noopener noreferrer">Ver no GitHub →</a>
+        </article>
       </div>
     </section>
 
-    <!-- SEÇÃO CONTATO -->
+    <!-- Contato -->
     <section id="contato" class="secao">
-      <h2 class="titulo-secao">// CONTATOS</h2>
-      
-      <div class="grid-contato">
-        <a href="mailto:kessyawdanmylla@gmail.com" class="card-contato">
-          <span class="icone-contato">📧</span>
-          <div>
-            <strong>E-mail</strong>
-            <span>kessyawdanmylla@gmail.com</span>
-          </div>
+      <h2 class="titulo-secao">// CONTATO</h2>
+      <div class="grade-contatos">
+        <a href="mailto:kessyawdanmylla@gmail.com" class="cartao-contato">
+          <strong>E-mail</strong>
+          <span>kessyawdanmylla@gmail.com</span>
         </a>
-
-        <a href="https://github.com/altsnip3r" target="_blank" rel="noopener noreferrer" class="card-contato">
-          <span class="icone-contato">💻</span>
-          <div>
-            <strong>GitHub</strong>
-            <span>github.com/altsnip3r</span>
-          </div>
+        <a href="https://github.com/altsnip3r" target="_blank" rel="noopener noreferrer" class="cartao-contato">
+          <strong>GitHub</strong>
+          <span>github.com/altsnip3r</span>
         </a>
-
-        <a href="https://www.linkedin.com/in/kessya-wdanmylla/" target="_blank" rel="noopener noreferrer" class="card-contato">
-          <span class="icone-contato">💼</span>
-          <div>
-            <strong>LinkedIn</strong>
-            <span>linkedin.com/in/kessya-wdanmylla</span>
-          </div>
+        <a href="https://www.linkedin.com/in/kessya-wdanmylla/" target="_blank" rel="noopener noreferrer" class="cartao-contato">
+          <strong>LinkedIn</strong>
+          <span>linkedin.com/in/kessya-wdanmylla</span>
         </a>
       </div>
     </section>
 
-    <footer class="rodape">
-      <p>© 2026 KESSYA WDANMYLLA — DESENVOLVEDORA FULLSTACK</p>
+    <footer class="rodape-pagina">
+      <p>© 2026 Kessya Wdanmylla — Desenvolvedora Fullstack</p>
     </footer>
-
   </main>
-  
-</body>
 
+  <script src="script.js"></script>
+</body>
 </html>
