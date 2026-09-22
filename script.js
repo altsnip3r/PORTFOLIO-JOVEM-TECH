@@ -15,7 +15,7 @@ let temporizadoresTerminal = [];
 let idAnimacaoChuva = null;
 
 // Efeito de digitação no título
-const textoTitulo = "FAÇA SUA ESCOLHA";
+const textoTitulo = "BEM VINDO AO MEU PORTFÓLIO";
 let indiceCaractere = 0;
 
 function animarTitulo() {
