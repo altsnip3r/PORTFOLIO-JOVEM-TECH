@@ -15,7 +15,7 @@ let temporizadoresTerminal = [];
 let idAnimacaoChuva = null;
 
 // Efeito de digitação no título
-const textoTitulo = "FAÇA SUA ESCOLHA";
+const textoTitulo = "BEM VINDO AO MEU PORTFÓLIO";
 let indiceCaractere = 0;
 
 function animarTitulo() {
@@ -61,9 +61,9 @@ function executarTerminal() {
   limparMensagensTerminal();
 
   const linhas = [
-    "> iniciando protocolo...",
-    "> questionando o caminho óbvio...",
-    "> carregando curiosidade...",
+    "> inicianlizando sistema...",
+    "> carregando perfil...",
+    "> autenticando credenciais do desenvolvedor...",
     "> acesso concedido."
   ];
 
