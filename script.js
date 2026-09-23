@@ -72,7 +72,7 @@ function executarTerminal() {
     const timeout = setTimeout(() => {
       const paragrafo = document.getElementById(`terminal-linha-${indice + 1}`);
       if (paragrafo) paragrafo.textContent = texto;
-    }, delay);
+    }, delay); 
 
     temporizadoresTerminal.push(timeout);
   });
